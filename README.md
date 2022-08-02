@@ -121,6 +121,8 @@ images: {
     required: true
 }
 
+schedule: string
+
 ## ACTIVITIES 
 
 name: {
@@ -128,7 +130,11 @@ name: {
     required: true
 }
 
+address: string
+
 schedule: String
+
+priority: number
 
 # ERD 
 
