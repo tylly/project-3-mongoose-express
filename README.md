@@ -1,4 +1,4 @@
-## Travel Planner API
+## Travel Planner API Project
 
 An app that helps you plan and book (stretch goal) trips.
 
