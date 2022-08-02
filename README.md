@@ -120,10 +120,7 @@ name: {
     required: true
 }
 
-images: {
-    type: String,
-    required: true
-}
+images: String
 
 schedule: string
 
