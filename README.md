@@ -7,6 +7,10 @@ Team Manager: James Adams
 Front End : Dan Stacy
 Back End: Amanda Corral
 
+## API's
+Open Trip Map API - provides geo location and images for location
+Amadeus - provides recommended activities for location
+
 ## User Stories
 
 As a user I want to be able to create an account.
