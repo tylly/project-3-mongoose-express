@@ -2,6 +2,27 @@
 
 An app that helps you plan and book (stretch goal) trips.
 
+## Roles 
+Team Manager: James Adams
+Front End : Dan Stacy
+Back End: Amanda Corral
+
+## User Stories
+
+As a user I want to be able to create an account.
+As a user I want to be able to sign into my account.
+As a user I want to be able to sign out of my account.
+As a user I want to be able to search destinations.
+As a user I want to be able to save destinations.
+As a user I want to be able to select destination display image.
+As a user I want to be able to edit destination display image.
+As a user I want to be able to delete destination.
+As a user I want to be able to view recommended activities.
+As a user I want to be able to save recommended activities.
+As a user I want to be able to create custom activities.
+As a user I want to be able to edit any activity.
+As a user I want to be able to delete an activity.
+
 ## Structure
 
 Dependencies are stored in [`package.json`](package.json).
@@ -42,17 +63,37 @@ We will be using the Amadeus travel API which connects to flight search, flight 
 
 ### Authentication
 
-| Verb   | URI Pattern            | Controller#Action |
-|--------|------------------------|-------------------|
-| POST   | `/sign-up`             | `users#signup`    |
-| POST   | `/sign-in`             | `users#signin`    |
+| Verb   | URI Pattern         | Controller#Action |
+|--------|---------------------|-------------------|
+| POST   | `/sign-up`          | `users#signup`    |
+| POST   | `/sign-in`          | `users#signin`    |
 | PATCH  | `/change-password/` | `users#changepw`  |
 | DELETE | `/sign-out/`        | `users#signout`   |
 
+### DESTINATIONS
 
-### Models
+| Verb  | URI Pattern         | Controller#Action |
+|-------|---------------------|-------------------|
+| GET   |        `/`          |     `index`       |
+| GET   |      `/:id`         |     `show`        |
+| POST  |       `/`           |     `add`         |
+| PATCH |       `/:id`        |    `update`       |
+| DELETE|       `/`           |      `destroy`    |
 
-USERS COLLECTION
+### ACTIVITES
+
+| Verb  | URI Pattern            | Controller#Action |
+|-------|------------------------|-------------------|
+| GET   |       `/:id`           |     `index`       |
+| GET   |    `/:id/:activityId`  |     `show`        |
+| POST  |       `/:id`           |     `add`         |
+| PATCH |    `/:id/:activityId`  |    `update`       |
+| DELETE|       `/:id`           |     `destroy`     |
+
+
+# Models
+
+## USERS COLLECTION
 
 email: {
     type: String,
@@ -68,20 +109,27 @@ hashedPassword: {
 token: String
 
 
-DESTINATIONS
+## DESTINATIONS
 
 name: {
     type: String,
     required: true
 }
 
-ACTIVITIES 
+images: {
+    type: String,
+    required: true
+}
+
+## ACTIVITIES 
 
 name: {
     type: String,
     required: true
 }
 
-## ERD 
+schedule: String
+
+# ERD 
 
 ![Read me Images](erd.png)

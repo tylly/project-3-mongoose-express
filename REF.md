@@ -62,12 +62,33 @@ Add your own scripts to test your custom API.
 
 ### Authentication
 
-| Verb   | URI Pattern            | Controller#Action |
-|--------|------------------------|-------------------|
-| POST   | `/sign-up`             | `users#signup`    |
-| POST   | `/sign-in`             | `users#signin`    |
+| Verb   | URI Pattern         | Controller#Action |
+|--------|---------------------|-------------------|
+| POST   | `/sign-up`          | `users#signup`    |
+| POST   | `/sign-in`          | `users#signin`    |
 | PATCH  | `/change-password/` | `users#changepw`  |
 | DELETE | `/sign-out/`        | `users#signout`   |
+
+### DESTINATIONS
+
+| Verb  | URI Pattern         | Controller#Action |
+|-------|---------------------|-------------------|
+| GET   |        `/`          |     `index`       |
+| GET   |      `/:id`         |     `show`        |
+| POST  |       `/`           |     `add`         |
+| PATCH |       `/:id`        |    `update`       |
+| DELETE|       `/`           |      `destroy`    |
+
+### ACTIVITES
+
+| Verb  | URI Pattern            | Controller#Action |
+|-------|------------------------|-------------------|
+| GET   |       `/:id`           |     `index`       |
+| GET   |    `/:id/:activityId`  |     `show`        |
+| POST  |       `/:id`           |     `add`         |
+| PATCH |    `/:id/:activityId`  |    `update`       |
+| DELETE|       `/:id`           |     `destroy`     |
+
 
 #### POST /sign-up
 
