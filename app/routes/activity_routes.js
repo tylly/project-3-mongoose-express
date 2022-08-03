@@ -6,6 +6,8 @@ const passport = require('passport')
 // pull in Mongoose model for activity
 const Activity = require('../models/activity')
 
+const Destination = require('../models/destination')
+
 // this is a collection of methods that help us detect situations when we need
 // to throw a custom error
 const customErrors = require('../../lib/custom_errors')
@@ -55,21 +57,31 @@ router.get('/:id/:activityId', requireToken, (req, res, next) => {
 		.catch(next)
 })
 
-// CREATE
-// POST /
-router.post('/:id', requireToken, (req, res, next) => {
-	// set owner of new activity to be current user
-	req.body.activity.owner = req.user.id
+// POST -> create a toy
+// POST /toys/<pet_id>
+router.post('/activities/:id', removeBlanks, requireToken, (req, res, next) => {
+    // get our toy from req.body
+	const destinationId = req.params.id
+    const activity = req.body.activity
+    // get our pet's id from req.params.petId
+    
+    // find the pet
+    Destination.findById(destinationId)
+        .then(handle404)
+        .then(destination => {
+            console.log('this is the destination', destination)
+            console.log('this is the activity', activity)
+			requireOwnership(req, destination)
+            // push the toy into the pet's toys array
+            destination.activities.push(activity)
 
-	Activity.create(req.body.activity)
-		// respond to succesful `create` with status 201 and JSON of new "example"
-		.then((activity) => {
-			res.status(201).json({ activity: activity.toObject() })
-		})
-		// if an error occurs, pass it off to our error handler
-		// the error handler needs the error message and the `res` object so that it
-		// can send an error message back to the client
-		.catch(next)
+            // save the pet
+            return destination.save()
+            
+        })
+        // send the newly updated pet as json
+        .then(destination => res.status(201).json({ destination: destination }))
+        .catch(next)
 })
 
 // UPDATE
