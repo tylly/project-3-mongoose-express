@@ -46,6 +46,21 @@ router.get("/", (req, res, next) => {
     .catch(next);
 });
 
+
+// CREATE
+// POST /destinations
+router.post("/", requireToken, (req, res, next) => {
+  console.log('hit')
+  // set owner of new destination to be current user
+  req.body.destination.owner = req.user.id;
+  Destination.create(req.body.destination)
+  // respond to succesful `create` with status 201 and JSON of new "snowboard"
+  .then((destination) => {
+    res.status(201).json({ destination: destination.toObject() });
+  })
+  .catch(next);
+});
+
 // SHOW
 // GET 
 router.get("/:id", (req, res, next) => {
@@ -58,20 +73,6 @@ router.get("/:id", (req, res, next) => {
       res.status(200).json({ destination: destination.toObject() })
     )
     // if an error occurs, pass it to the handler
-    .catch(next);
-});
-
-// CREATE
-// POST /destinations
-router.post("/", requireToken, (req, res, next) => {
-	console.log('hit')
-  // set owner of new destination to be current user
-  req.body.destination.owner = req.user.id;
-  Destination.create(req.body.destination)
-    // respond to succesful `create` with status 201 and JSON of new "snowboard"
-    .then((destination) => {
-      res.status(201).json({ destination: destination.toObject() });
-    })
     .catch(next);
 });
 
