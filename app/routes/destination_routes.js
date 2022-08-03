@@ -27,9 +27,9 @@ const requireToken = passport.authenticate("bearer", { session: false });
 // instantiate a router (mini app that only handles routes)
 const router = express.Router();
 
-// INDEX
+// INDEX 
 // GET /destinations
-router.get("/", (req, res, next) => {
+router.get("/destinations", (req, res, next) => {
   //we want anyone to see destinations so no requireToken
   //if we wanted to protect resources we could add that back in between
   //route and callback as second argument
@@ -79,7 +79,7 @@ router.get("/:id", (req, res, next) => {
 // UPDATE
 // PATCH /destinations/5a7db6c74d55bc51bdf39793
 router.patch(
-  "/:id",
+  "/destinations/:id",
   requireToken,
   removeBlanks,
   (req, res, next) => {
@@ -106,7 +106,7 @@ router.patch(
 
 // DESTROY
 // DELETE 
-router.delete("/:id", requireToken, (req, res, next) => {
+router.delete("/destinations/:id", requireToken, (req, res, next) => {
     Destination.findById(req.params.id)
     .then(handle404)
     .then((destination) => {
@@ -120,5 +120,20 @@ router.delete("/:id", requireToken, (req, res, next) => {
     // if an error occurs, pass it to the handler
     .catch(next);
 });
+
+// SHOW
+// GET 
+router.get("/destinations/:id", (req, res, next) => {
+    // req.params.id will be set based on the `:id` in the route
+    Destination.findById(req.params.id)
+   
+      .then(handle404)
+      // if `findById` is succesful, respond with 200 and "snowboard" JSON
+      .then((destination) =>
+        res.status(200).json({ destination: destination.toObject() })
+      )
+      // if an error occurs, pass it to the handler
+      .catch(next);
+  });
 
 module.exports = router;
