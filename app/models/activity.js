@@ -1,15 +1,14 @@
 const mongoose = require('mongoose')
 
-const exampleSchema = new mongoose.Schema(
-	{
-		title: {
+const activitySchema = new mongoose.Schema({
+		name: {
 			type: String,
 			required: true,
 		},
-		text: {
-			type: String,
-			required: true,
-		},
+		address: String,
+		schedule: String,
+		priority: Number,
+		
 		owner: {
 			type: mongoose.Schema.Types.ObjectId,
 			ref: 'User',
@@ -21,4 +20,4 @@ const exampleSchema = new mongoose.Schema(
 	}
 )
 
-module.exports = mongoose.model('Example', exampleSchema)
+module.exports = activitySchema
