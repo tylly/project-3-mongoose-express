@@ -118,6 +118,10 @@ images: String
 
 schedule: string
 
+owner: String
+
+activities: []
+
 ## ACTIVITIES 
 
 name: {
