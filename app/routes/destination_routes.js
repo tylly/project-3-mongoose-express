@@ -49,8 +49,8 @@ router.get("/destinations", (req, res, next) => {
 
 // CREATE
 // POST /destinations
-router.post("/", requireToken, (req, res, next) => {
-  console.log('hit')
+router.post("/destinations/:id", requireToken, (req, res, next) => {
+	console.log('hit')
   // set owner of new destination to be current user
   req.body.destination.owner = req.user.id;
   Destination.create(req.body.destination)
