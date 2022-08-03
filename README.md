@@ -76,7 +76,7 @@ to change the name of your app.
 | GET   |      `/:id`         |     `show`        |
 | POST  |       `/`           |     `add`         |
 | PATCH |       `/:id`        |    `update`       |
-| DELETE|       `/`           |      `destroy`    |
+| DELETE|       `/:id`           |      `destroy`    |
 
 ### ACTIVITES
 
@@ -86,7 +86,7 @@ to change the name of your app.
 | GET   |    `/:id/:activityId`  |     `show`        |
 | POST  |       `/:id`           |     `add`         |
 | PATCH |    `/:id/:activityId`  |    `update`       |
-| DELETE|       `/:id`           |     `destroy`     |
+| DELETE|    `/:id/:activityId`  |     `destroy`     |
 
 
 # Models
