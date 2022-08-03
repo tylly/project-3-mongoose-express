@@ -21,6 +21,7 @@ const requireOwnership = customErrors.requireOwnership
 // this is middleware that will remove blank fields from `req.body`, e.g.
 // { example: { title: '', text: 'foo' } } -> { example: { text: 'foo' } }
 const removeBlanks = require('../../lib/remove_blank_fields')
+const destination = require('../models/destination')
 // passing this as a second argument to `router.<verb>` will make it
 // so that a token MUST be passed for that route to be available
 // it will also set `req.user`
@@ -84,27 +85,26 @@ router.post('/activities/:id', removeBlanks, requireToken, (req, res, next) => {
         .catch(next)
 })
 
-// UPDATE
-// PATCH /examples/5a7db6c74d55bc51bdf39793
-router.patch('/:id/:activityId', requireToken, removeBlanks, (req, res, next) => {
-	// if the client attempts to change the `owner` property by including a new
-	// owner, prevent that by deleting that key/value pair
-	delete req.body.activity.owner
+router.patch('/activities/:destinationId/:activityId', requireToken, removeBlanks, (req, res, next) => {
+    // get the toy and the pet ids saved to variables
+    const destinationId = req.params.destinationId
+    const activityId = req.params.activityId
 
-	Activity.findById(req.params.id)
-		.then(handle404)
-		.then((activity) => {
-			// pass the `req` object and the Mongoose record to `requireOwnership`
-			// it will throw an error if the current user isn't the owner
-			requireOwnership(req, activity)
-
-			// pass the result of Mongoose's `.update` to the next `.then`
-			return activity.updateOne(req.body.activity)
-		})
-		// if that succeeded, return 204 and no JSON
-		.then(() => res.sendStatus(204))
-		// if an error occurs, pass it to the handler
-		.catch(next)
+    // find our pet
+    Destination.findById(destinationId)
+        .then(handle404)
+        .then(destination => {
+            // single out the toy (.id is a subdoc method to find something in an array of subdocs)
+            const theActivity = destination.activities.id(activityId)
+            // make sure the user sending the request is the owner
+            requireOwnership(req, destination)
+            // update the toy with a subdocument method
+            theActivity.set(req.body.activity)
+            // return the saved pet
+            return destination.save()
+        })
+        .then(() => res.sendStatus(204))
+        .catch(next)
 })
 
 // DESTROY
