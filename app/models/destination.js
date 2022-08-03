@@ -2,7 +2,9 @@ const mongoose = require('mongoose')
 
 const activitySchema = require('./activity')
 
-const destinationSchema = new mongoose.Schema(
+const { Schema, model } = mongoose;
+
+const destinationSchema = new Schema(
 	{
 		name: {
 			type: String,
