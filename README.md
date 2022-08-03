@@ -140,3 +140,21 @@ priority: number
 # ERD 
 
 ![Read me Images](erd.png)
+
+## Sign Up
+![Read me Images](images/1.png)
+
+## Sign In
+![Read me Images](images/2.png)
+
+## Index Page
+![Read me Images](images/3.png)
+
+## Plan Trip Page
+![Read me Images](images/4.png)
+
+## Show Page
+![Read me Images](images/5.png)
+
+## Activity Show Page
+![Read me Images](images/6.png)
