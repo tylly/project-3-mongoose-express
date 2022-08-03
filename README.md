@@ -59,12 +59,6 @@ You probably will only need to interact with files in `app/models`,
 `app/routes`, and `server.js`. You'll need to edit `db/config.js` just once,
 to change the name of your app.
 
-## API 
-
-https://developers.amadeus.com/
-
-We will be using the Amadeus travel API which connects to flight search, flight booking, hotel and destination content that powers the biggest names in travel.
-
 ### Authentication
 
 | Verb   | URI Pattern         | Controller#Action |
