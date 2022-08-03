@@ -109,19 +109,30 @@ router.patch('/activities/:destinationId/:activityId', requireToken, removeBlank
 
 // DESTROY
 // DELETE /examples/5a7db6c74d55bc51bdf39793
-router.delete('/:id/:activityId', requireToken, (req, res, next) => {
-	Activity.findById(req.params.id)
-		.then(handle404)
-		.then((activity) => {
-			// throw an error if current user doesn't own `activity`
-			requireOwnership(req, activity)
-			// delete the activity ONLY IF the above didn't throw
-			activity.deleteOne()
-		})
-		// send back 204 and no content if the deletion succeeded
-		.then(() => res.sendStatus(204))
-		// if an error occurs, pass it to the handler
-		.catch(next)
+router.delete('/activities/:destinationId/:activityId', requireToken, (req, res, next) => {
+    // get the toy and the pet ids saved to variables
+    const destinationId = req.params.destinationId
+    const activityId = req.params.activityId
+    // then we find the pet
+    Destination.findById(destinationId)
+        // handle a 404
+        .then(handle404)
+        // do stuff with the toy(in this case, delete it)
+        .then(destination => {
+            // we can get the subdoc the same way as update
+            const theActivity = destination.activities.id(activityId)
+            // require that the user deleting this toy is the pet's owner
+            requireOwnership(req, destination)
+            // call remove on the subdoc
+            theActivity.remove()
+
+            // return the saved pet
+            return destination.save()
+        })
+        // send 204 no content status
+        .then(() => res.sendStatus(204))
+        // handle errors
+        .catch(next)
 })
 
 module.exports = router
