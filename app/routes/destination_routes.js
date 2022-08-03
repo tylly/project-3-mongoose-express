@@ -54,7 +54,7 @@ router.post("/destinations/:id", requireToken, (req, res, next) => {
   // set owner of new destination to be current user
   req.body.destination.owner = req.user.id;
   Destination.create(req.body.destination)
-  // respond to succesful `create` with status 201 and JSON of new "snowboard"
+  // respond to succesful `git statuscreate` with status 201 and JSON of new "snowboard"
   .then((destination) => {
     res.status(201).json({ destination: destination.toObject() });
   })
