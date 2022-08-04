@@ -12,6 +12,9 @@ const destinationSchema = new Schema(
 		},
 		images: String,
 		schedule: String,
+		lat: Number,
+		lon: Number,
+		population: Number,
 		owner: {
 			type: mongoose.Schema.Types.ObjectId,
 			ref: 'User',
