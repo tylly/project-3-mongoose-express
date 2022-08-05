@@ -48,12 +48,15 @@ const router = express.Router()
 
 // SHOW
 // GET /examples/5a7db6c74d55bc51bdf39793
-router.get('/:id/:activityId', requireToken, (req, res, next) => {
+router.get('/activities/:destinationId/:activityId', requireToken, (req, res, next) => {
 	// req.params.id will be set based on the `:id` in the route
-	Activity.findById(req.params.id)
+	Destination.findById(req.params.destinationId)
 		.then(handle404)
 		// if `findById` is succesful, respond with 200 and "example" JSON
-		.then((activity) => res.status(200).json({ activity: activity.toObject() }))
+		.then((destination) => {
+            const activity = destination.activities.id(req.params.activityId)
+            res.status(200).json({ activity: activity.toObject() })
+        })
 		// if an error occurs, pass it to the handler
 		.catch(next)
 })
