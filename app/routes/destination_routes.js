@@ -27,7 +27,7 @@ const requireToken = passport.authenticate("bearer", { session: false });
 // instantiate a router (mini app that only handles routes)
 const router = express.Router();
 
-// INDEX
+// INDEX 
 // GET /destinations
 router.get("/destinations", (req, res, next) => {
   //we want anyone to see destinations so no requireToken
@@ -47,7 +47,6 @@ router.get("/destinations", (req, res, next) => {
 });
 
 
-
 // CREATE
 // POST /destinations
 router.post("/destinations/:id", requireToken, (req, res, next) => {
@@ -55,10 +54,25 @@ router.post("/destinations/:id", requireToken, (req, res, next) => {
   // set owner of new destination to be current user
   req.body.destination.owner = req.user.id;
   Destination.create(req.body.destination)
-    // respond to succesful `create` with status 201 and JSON of new "snowboard"
-    .then((destination) => {
-      res.status(201).json({ destination: destination.toObject() });
-    })
+  // respond to succesful `git statuscreate` with status 201 and JSON of new "snowboard"
+  .then((destination) => {
+    res.status(201).json({ destination: destination.toObject() });
+  })
+  .catch(next);
+});
+
+// SHOW
+// GET 
+router.get("/:id", (req, res, next) => {
+  // req.params.id will be set based on the `:id` in the route
+  Destination.findById(req.params.id)
+ 
+    .then(handle404)
+    // if `findById` is succesful, respond with 200 and "snowboard" JSON
+    .then((destination) =>
+      res.status(200).json({ destination: destination.toObject() })
+    )
+    // if an error occurs, pass it to the handler
     .catch(next);
 });
 
