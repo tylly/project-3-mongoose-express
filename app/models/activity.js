@@ -8,6 +8,7 @@ const activitySchema = new mongoose.Schema({
 		address: String,
 		schedule: String,
 		priority: Number,
+		images: String,
 		
 		owner: {
 			type: mongoose.Schema.Types.ObjectId,
